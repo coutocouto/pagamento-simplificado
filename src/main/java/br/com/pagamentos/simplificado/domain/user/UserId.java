@@ -12,7 +12,7 @@ public class UserId extends Uuid {
         this.value = Objects.requireNonNull(value);
     }
 
-    public static UserId unique() {
+    public static UserId generate() {
         return UserId.from(UUID.randomUUID().toString().toLowerCase());
     }
 
@@ -23,18 +23,5 @@ public class UserId extends Uuid {
     @Override
     public String getValue() {
         return value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final UserId that = (UserId) o;
-        return getValue().equals(that.getValue());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getValue());
     }
 }
