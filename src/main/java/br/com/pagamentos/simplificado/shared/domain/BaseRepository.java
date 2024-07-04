@@ -3,6 +3,6 @@ package br.com.pagamentos.simplificado.shared.domain;
 import java.util.List;
 
 public interface BaseRepository<T> {
-    T save(T entity);
+    T create(T entity);
     List<T> list();
 }

@@ -8,9 +8,13 @@ spring:
     console:
       enabled: true
       path: /h2-console
-  sql:
-    init:
-      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: none  # Disable Hibernate's auto DDL
+    show-sql: true
+    sql:
+      init:
+        mode: always  # Ensure scripts are always run
   kafka:
     bootstrap-servers: localhost:9092
     producer:
