@@ -1,10 +1,9 @@
-package br.com.pagamentos.simplificado.infrastructure.transaction.repositories;
+package br.com.pagamentos.simplificado.infrastructure.transaction.repository;
 
 import br.com.pagamentos.simplificado.domain.transaction.Transaction;
 import br.com.pagamentos.simplificado.domain.user.User;
 import br.com.pagamentos.simplificado.domain.wallet.AccountType;
 import br.com.pagamentos.simplificado.domain.wallet.Wallet;
-import br.com.pagamentos.simplificado.infrastructure.transaction.TransactionJpaModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

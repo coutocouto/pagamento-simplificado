@@ -4,7 +4,7 @@ import br.com.pagamentos.simplificado.domain.transaction.Transaction;
 import br.com.pagamentos.simplificado.domain.user.User;
 import br.com.pagamentos.simplificado.domain.wallet.AccountType;
 import br.com.pagamentos.simplificado.domain.wallet.Wallet;
-import br.com.pagamentos.simplificado.infrastructure.transaction.repositories.TransactionRepositoryImp;
+import br.com.pagamentos.simplificado.infrastructure.transaction.repository.TransactionRepositoryImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -42,19 +42,19 @@ class ListTransactionUseCaseTest {
 
         when(transactionRepository.list()).thenReturn(Arrays.asList(transaction1, transaction2));
 
-        List<OutputListTransactionDto> result = listTransactionUseCase.execute();
+        List<ListTransactionOutput> result = listTransactionUseCase.execute();
 
         assertEquals(2, result.size());
 
-        OutputListTransactionDto dto1 = result.get(0);
-        assertEquals(transaction1.getReceiver().getId().getValue(), dto1.receiver().getId().getValue());
+        ListTransactionOutput dto1 = result.get(0);
+        assertEquals(transaction1.getPayee().getId().getValue(), dto1.receiver().getId().getValue());
         assertEquals(transaction1.getPayer().getId().getValue(), dto1.payer().getId().getValue());
         assertEquals(transaction1.getAmount(), dto1.amount());
         assertEquals(transaction1.getStatus(), dto1.status());
         assertEquals(transaction1.getCreatedAt(), dto1.createdAt());
 
-        OutputListTransactionDto dto2 = result.get(1);
-        assertEquals(transaction2.getReceiver().getId().getValue(), dto2.receiver().getId().getValue());
+        ListTransactionOutput dto2 = result.get(1);
+        assertEquals(transaction2.getPayee().getId().getValue(), dto2.receiver().getId().getValue());
         assertEquals(transaction2.getPayer().getId().getValue(), dto2.payer().getId().getValue());
         assertEquals(transaction2.getAmount(), dto2.amount());
         assertEquals(transaction2.getStatus(), dto2.status());

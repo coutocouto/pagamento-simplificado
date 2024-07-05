@@ -1,46 +1,44 @@
 package br.com.pagamentos.simplificado.domain.transaction;
 
 import br.com.pagamentos.simplificado.domain.wallet.Wallet;
-import br.com.pagamentos.simplificado.domain.wallet.WalletId;
 import br.com.pagamentos.simplificado.shared.domain.Entity;
-import br.com.pagamentos.simplificado.shared.domain.Uuid;
 
 import java.time.Instant;
 
 public class Transaction extends Entity<TransactionId> {
-    private Wallet receiver;
-    private Wallet payer;
-    private double amount;
+    private final Wallet payee;
+    private final Wallet payer;
+    private final double amount;
+    private final Instant createdAt;
     private TransactionStatus status;
-    private Instant createdAt;
 
-    private Transaction(TransactionId id, Wallet receiver, Wallet payer, double amount, TransactionStatus status, Instant createdAt) {
+    public Transaction(TransactionId id, Wallet payee, Wallet payer, double amount, TransactionStatus status, Instant createdAt) {
         super(id);
-        this.receiver = receiver;
+        this.payee = payee;
         this.payer = payer;
         this.amount = amount;
         this.status = status;
         this.createdAt = createdAt;
     }
 
-    public static Transaction create(Wallet receiver, Wallet payer, double amount) {
+    public static Transaction create(Wallet payee, Wallet payer, double amount) {
         TransactionId id = TransactionId.generate();
         Instant now = Instant.now();
         TransactionStatus transactionStatus = TransactionStatus.PENDING;
-        Transaction transaction = new Transaction(id, receiver, payer, amount, transactionStatus, now);
+        Transaction transaction = new Transaction(id, payee, payer, amount, transactionStatus, now);
         transaction.validate();
         return transaction;
+    }
+
+
+    public static Transaction with(TransactionId id, Wallet payee, Wallet payer, double amount, TransactionStatus status, Instant createdAt) {
+        return new Transaction(id, payee, payer, amount, status, createdAt);
     }
 
     @Override
     public void validate() {
         TransactionValidator validator = new TransactionValidator();
         validator.validate(this.notification, this);
-        super.validate();
-    }
-
-    public static Transaction with(TransactionId id, Wallet receiver, Wallet payer, double amount, TransactionStatus status, Instant createdAt) {
-        return new Transaction(id, receiver, payer, amount, status, createdAt);
     }
 
     public void approve() {
@@ -51,8 +49,8 @@ public class Transaction extends Entity<TransactionId> {
         this.status = TransactionStatus.DENIED;
     }
 
-    public Wallet getReceiver() {
-        return receiver;
+    public Wallet getPayee() {
+        return payee;
     }
 
     public Wallet getPayer() {

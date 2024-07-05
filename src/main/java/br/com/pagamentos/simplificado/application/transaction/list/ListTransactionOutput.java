@@ -7,7 +7,7 @@ import br.com.pagamentos.simplificado.domain.wallet.Wallet;
 
 import java.time.Instant;
 
-public record OutputListTransactionDto(
+public record ListTransactionOutput(
         TransactionId id,
         Wallet receiver,
         Wallet payer,
@@ -16,10 +16,10 @@ public record OutputListTransactionDto(
         Instant createdAt
 ) {
 
-    public static OutputListTransactionDto from(Transaction transaction) {
-        return new OutputListTransactionDto(
+    public static ListTransactionOutput from(Transaction transaction) {
+        return new ListTransactionOutput(
                 transaction.getId(),
-                transaction.getReceiver(),
+                transaction.getPayee(),
                 transaction.getPayer(),
                 transaction.getAmount(),
                 transaction.getStatus(),

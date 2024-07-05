@@ -2,17 +2,16 @@ package br.com.pagamentos.simplificado.domain.wallet;
 
 import br.com.pagamentos.simplificado.domain.user.User;
 import br.com.pagamentos.simplificado.shared.domain.Entity;
-import br.com.pagamentos.simplificado.shared.domain.Uuid;
 
 import java.time.Instant;
 
-public class Wallet extends Entity<Uuid> {
-    private User user;
-    private AccountType accountType;
+public class Wallet extends Entity<WalletId> {
+    private final User user;
+    private final AccountType accountType;
     private double balance;
-    private Instant createdAt;
+    private final Instant createdAt;
 
-    private Wallet(Uuid id, User user, AccountType accountType, double balance, Instant createdAt) {
+    private Wallet(WalletId id, User user, AccountType accountType, double balance, Instant createdAt) {
         super(id);
         this.user = user;
         this.accountType = accountType;
@@ -21,7 +20,7 @@ public class Wallet extends Entity<Uuid> {
     }
 
     public static Wallet create(User user, AccountType accountType, double balance) {
-        Uuid id = WalletId.generate();
+        WalletId id = WalletId.generate();
         Instant now = Instant.now();
         return new Wallet(id, user, accountType, balance, now);
     }
@@ -44,5 +43,18 @@ public class Wallet extends Entity<Uuid> {
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    @Override
+    public void validate() {
+
+    }
+
+    public void credit(double amount) {
+        this.balance += amount;
+    }
+
+    public void debit(double amount) {
+        this.balance -= amount;
     }
 }

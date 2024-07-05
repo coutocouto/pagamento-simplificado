@@ -1,10 +1,10 @@
 package br.com.pagamentos.simplificado.domain.wallet;
 
 import br.com.pagamentos.simplificado.domain.user.User;
-import br.com.pagamentos.simplificado.shared.domain.Uuid;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class WalletTest {
 

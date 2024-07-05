@@ -1,11 +1,12 @@
-package br.com.pagamentos.simplificado.infrastructure.transaction.repositories;
+package br.com.pagamentos.simplificado.infrastructure.transaction.repository;
 
 import br.com.pagamentos.simplificado.domain.transaction.Transaction;
 import br.com.pagamentos.simplificado.domain.transaction.TransactionRepository;
-import br.com.pagamentos.simplificado.infrastructure.transaction.TransactionJpaModel;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class TransactionRepositoryImp implements TransactionRepository {
 
     private final TransactionJpaRepository repository;

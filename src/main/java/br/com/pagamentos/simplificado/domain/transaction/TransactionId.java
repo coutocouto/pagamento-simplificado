@@ -1,12 +1,12 @@
 package br.com.pagamentos.simplificado.domain.transaction;
 
-import br.com.pagamentos.simplificado.domain.user.UserId;
-import br.com.pagamentos.simplificado.shared.domain.Uuid;
+import br.com.pagamentos.simplificado.shared.domain.BaseId;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class TransactionId extends Uuid {
+public class TransactionId extends BaseId {
+
     private final String value;
 
     private TransactionId(final String value) {
@@ -25,4 +25,5 @@ public class TransactionId extends Uuid {
     public String getValue() {
         return value;
     }
+
 }

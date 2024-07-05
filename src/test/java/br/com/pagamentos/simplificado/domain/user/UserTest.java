@@ -1,15 +1,15 @@
 package br.com.pagamentos.simplificado.domain.user;
 
-import br.com.pagamentos.simplificado.shared.domain.Uuid;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class UserTest {
 
     @Test
     void createAUser() {
-        User user = User.create( "Fulano de Tal", "12345678901", "email@protected]", "123456");
+        User user = User.create("Fulano de Tal", "12345678901", "email@protected]", "123456");
         assertNotNull(user);
     }
 

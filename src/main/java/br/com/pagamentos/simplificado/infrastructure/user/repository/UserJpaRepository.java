@@ -1,7 +1,8 @@
-package br.com.pagamentos.simplificado.infrastructure.user.repositories;
+package br.com.pagamentos.simplificado.infrastructure.user.repository;
 
-import br.com.pagamentos.simplificado.infrastructure.user.UserJpaModel;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserJpaRepository extends JpaRepository<UserJpaModel, String> {
 }

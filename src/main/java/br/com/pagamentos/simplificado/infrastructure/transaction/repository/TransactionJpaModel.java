@@ -1,9 +1,9 @@
-package br.com.pagamentos.simplificado.infrastructure.transaction;
+package br.com.pagamentos.simplificado.infrastructure.transaction.repository;
 
 import br.com.pagamentos.simplificado.domain.transaction.Transaction;
 import br.com.pagamentos.simplificado.domain.transaction.TransactionId;
 import br.com.pagamentos.simplificado.domain.transaction.TransactionStatus;
-import br.com.pagamentos.simplificado.infrastructure.wallet.WalletJpaModel;
+import br.com.pagamentos.simplificado.infrastructure.wallet.repository.WalletJpaModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -18,8 +18,8 @@ public class TransactionJpaModel {
     private String id;
 
     @ManyToOne
-    @JoinColumn(name = "receiver", nullable = false)
-    private WalletJpaModel receiver;
+    @JoinColumn(name = "payee", nullable = false)
+    private WalletJpaModel payee;
 
     @ManyToOne
     @JoinColumn(name = "payer", nullable = false)
@@ -37,14 +37,14 @@ public class TransactionJpaModel {
 
     private TransactionJpaModel(
             String id,
-            WalletJpaModel receiver,
+            WalletJpaModel payee,
             WalletJpaModel payer,
             double amount,
             TransactionStatus status,
             Instant createdAt
     ) {
         this.id = id;
-        this.receiver = receiver;
+        this.payee = payee;
         this.payer = payer;
         this.amount = amount;
         this.status = status;
@@ -60,7 +60,7 @@ public class TransactionJpaModel {
     public static TransactionJpaModel toModel(Transaction transaction) {
         return new TransactionJpaModel(
                 transaction.getId().getValue(),
-                WalletJpaModel.toModel(transaction.getReceiver()),
+                WalletJpaModel.toModel(transaction.getPayee()),
                 WalletJpaModel.toModel(transaction.getPayer()),
                 transaction.getAmount(),
                 transaction.getStatus(),
@@ -71,7 +71,7 @@ public class TransactionJpaModel {
     public Transaction toEntity() {
         return Transaction.with(
                 TransactionId.from(this.id),
-                this.receiver.toEntity(),
+                this.payee.toEntity(),
                 this.payer.toEntity(),
                 this.amount,
                 this.status,

@@ -1,15 +1,14 @@
 package br.com.pagamentos.simplificado.domain.user;
 
 import br.com.pagamentos.simplificado.shared.domain.Entity;
-import br.com.pagamentos.simplificado.shared.domain.Uuid;
 
-public class User extends Entity<Uuid> {
-    private String fullName;
-    private String cpfCnpj;
-    private String email;
-    private String password;
+public class User extends Entity<UserId> {
+    private final String fullName;
+    private final String cpfCnpj;
+    private final String email;
+    private final String password;
 
-    private User(Uuid id,
+    private User(UserId id,
                  String fullName,
                  String cpfCnpj,
                  String email,
@@ -67,5 +66,10 @@ public class User extends Entity<Uuid> {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public void validate() {
+
     }
 }

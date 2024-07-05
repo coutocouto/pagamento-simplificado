@@ -10,16 +10,17 @@ spring:
       path: /h2-console
   jpa:
     hibernate:
-      ddl-auto: none  # Disable Hibernate's auto DDL
+      ddl-auto: none
     show-sql: true
     sql:
       init:
-        mode: always  # Ensure scripts are always run
+        mode: always
   kafka:
     bootstrap-servers: localhost:9092
     producer:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.trusted.packages: "*"
+        spring.json.value.default.type: br.com.pagamentos.simplificado.domain.transaction.Transaction
+        spring.json.trusted.packages: '*'

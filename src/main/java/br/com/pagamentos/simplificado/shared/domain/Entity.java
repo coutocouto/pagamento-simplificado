@@ -1,12 +1,10 @@
 package br.com.pagamentos.simplificado.shared.domain;
 
-import br.com.pagamentos.simplificado.shared.domain.exceptions.NotificationException;
 import br.com.pagamentos.simplificado.shared.domain.validation.Notification;
 
 import java.util.Objects;
 
-public class Entity<ID extends Uuid>{
-
+public abstract class Entity<ID extends BaseId> {
     protected final ID id;
     protected Notification notification = new Notification();
 
@@ -16,15 +14,15 @@ public class Entity<ID extends Uuid>{
         this.id = id;
     }
 
+    public Notification getNotification() {
+        return notification;
+    }
+
     public ID getId() {
         return id;
     }
 
-    protected void validate() {
-        if (notification.hasErrors()) {
-            throw new NotificationException(notification.getErrors());
-        }
-    }
+    public abstract void validate();
 
     @Override
     public boolean equals(final Object o) {

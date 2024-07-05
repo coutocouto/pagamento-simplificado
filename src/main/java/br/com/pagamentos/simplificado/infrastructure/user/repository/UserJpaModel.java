@@ -1,4 +1,4 @@
-package br.com.pagamentos.simplificado.infrastructure.user;
+package br.com.pagamentos.simplificado.infrastructure.user.repository;
 
 import br.com.pagamentos.simplificado.domain.user.User;
 import br.com.pagamentos.simplificado.domain.user.UserId;

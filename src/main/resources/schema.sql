@@ -17,12 +17,12 @@ id VARCHAR(255) PRIMARY KEY,
 
 CREATE TABLE IF NOT EXISTS transactions (
     id VARCHAR(255) PRIMARY KEY,
-    receiver VARCHAR(255) NOT NULL,
+    payee VARCHAR(255) NOT NULL,
     payer VARCHAR(255) NOT NULL,
     amount DECIMAL(15, 2) NOT NULL,
     status VARCHAR(10) NOT NULL,
     created_at TIMESTAMP NOT NULL,
-    CONSTRAINT fk_receiver FOREIGN KEY (receiver) REFERENCES wallets(id) ON DELETE CASCADE,
+    CONSTRAINT fk_payee FOREIGN KEY (payee) REFERENCES wallets(id) ON DELETE CASCADE,
     CONSTRAINT fk_payer FOREIGN KEY (payer) REFERENCES wallets(id) ON DELETE CASCADE
     );
 

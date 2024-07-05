@@ -1,8 +1,8 @@
 package br.com.pagamentos.simplificado.application.transaction.list;
 
-import br.com.pagamentos.simplificado.infrastructure.transaction.repositories.TransactionJpaRepository;
-import br.com.pagamentos.simplificado.infrastructure.transaction.repositories.TransactionRepositoryImp;
-import br.com.pagamentos.simplificado.infrastructure.wallet.repositories.WalletJpaRepository;
+import br.com.pagamentos.simplificado.infrastructure.transaction.repository.TransactionJpaRepository;
+import br.com.pagamentos.simplificado.infrastructure.transaction.repository.TransactionRepositoryImp;
+import br.com.pagamentos.simplificado.infrastructure.wallet.repository.WalletJpaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,6 @@ class ListTransactionUseCaseIntegrationTest {
     void testExecute() {
         // TODO: review this test, conection error
         Assertions.assertTrue(true);
-//        // Arrange
 //        User user1 = User.create("1", "John", "john@example.com", "password");
 //        User user2 = User.create("2", "Doe", "doe@example.com", "password2");
 //
@@ -48,10 +47,8 @@ class ListTransactionUseCaseIntegrationTest {
 //        transactionJpaRepository.save(TransactionJpaModel.toModel(transaction1));
 //        transactionJpaRepository.save(TransactionJpaModel.toModel(transaction2));
 //
-//        // Act
 //        List<OutputListTransactionDto> result = listTransactionUseCase.execute();
 //
-//        // Assert
 //        assertEquals(2, result.size());
 //
 //        OutputListTransactionDto dto1 = result.get(0);

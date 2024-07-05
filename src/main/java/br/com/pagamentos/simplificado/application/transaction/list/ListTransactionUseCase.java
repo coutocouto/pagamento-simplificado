@@ -1,11 +1,13 @@
 package br.com.pagamentos.simplificado.application.transaction.list;
 
-import br.com.pagamentos.simplificado.infrastructure.transaction.repositories.TransactionRepositoryImp;
+import br.com.pagamentos.simplificado.infrastructure.transaction.repository.TransactionRepositoryImp;
 import br.com.pagamentos.simplificado.shared.application.ListUseCase;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public class ListTransactionUseCase extends ListUseCase<OutputListTransactionDto> {
+@Service
+public class ListTransactionUseCase extends ListUseCase<ListTransactionOutput> {
 
     private final TransactionRepositoryImp repository;
 
@@ -14,9 +16,9 @@ public class ListTransactionUseCase extends ListUseCase<OutputListTransactionDto
     }
 
     @Override
-    public List<OutputListTransactionDto> execute() {
+    public List<ListTransactionOutput> execute() {
         return this.repository.list().stream()
-                .map(OutputListTransactionDto::from)
+                .map(ListTransactionOutput::from)
                 .toList();
     }
 }

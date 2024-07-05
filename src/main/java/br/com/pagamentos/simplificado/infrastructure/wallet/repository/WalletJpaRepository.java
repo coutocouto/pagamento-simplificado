@@ -1,7 +1,8 @@
-package br.com.pagamentos.simplificado.infrastructure.wallet.repositories;
+package br.com.pagamentos.simplificado.infrastructure.wallet.repository;
 
-import br.com.pagamentos.simplificado.infrastructure.wallet.WalletJpaModel;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface WalletJpaRepository extends JpaRepository<WalletJpaModel, String> {
 }

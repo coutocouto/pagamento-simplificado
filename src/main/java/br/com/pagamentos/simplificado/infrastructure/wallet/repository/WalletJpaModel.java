@@ -1,9 +1,9 @@
-package br.com.pagamentos.simplificado.infrastructure.wallet;
+package br.com.pagamentos.simplificado.infrastructure.wallet.repository;
 
 import br.com.pagamentos.simplificado.domain.wallet.AccountType;
 import br.com.pagamentos.simplificado.domain.wallet.Wallet;
 import br.com.pagamentos.simplificado.domain.wallet.WalletId;
-import br.com.pagamentos.simplificado.infrastructure.user.UserJpaModel;
+import br.com.pagamentos.simplificado.infrastructure.user.repository.UserJpaModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 
