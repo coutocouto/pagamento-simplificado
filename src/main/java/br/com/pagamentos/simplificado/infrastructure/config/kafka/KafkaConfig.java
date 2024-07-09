@@ -1,4 +1,4 @@
-package br.com.pagamentos.simplificado.infrastructure.config;
+package br.com.pagamentos.simplificado.infrastructure.config.kafka;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;

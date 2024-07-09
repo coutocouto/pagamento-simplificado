@@ -13,12 +13,12 @@ import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NotificationConsumer {
-    private static final Logger log = LoggerFactory.getLogger(NotificationConsumer.class);
+public class NotificationListener {
+    private static final Logger log = LoggerFactory.getLogger(NotificationListener.class);
 
     private final NotificationClient notificationClient;
 
-    public NotificationConsumer(NotificationClient notificationClient) {
+    public NotificationListener(NotificationClient notificationClient) {
         this.notificationClient = notificationClient;
     }
 

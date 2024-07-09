@@ -2,6 +2,7 @@ package br.com.pagamentos.simplificado.infrastructure.transaction.repository;
 
 import br.com.pagamentos.simplificado.domain.transaction.Transaction;
 import br.com.pagamentos.simplificado.domain.transaction.TransactionRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class TransactionRepositoryImp implements TransactionRepository {
     }
 
     @Override
+    @Cacheable(value = "listTransactionsCache")
     public List<Transaction> list() {
         return this.repository.findAll().stream().map(TransactionJpaModel::toEntity).toList();
     }

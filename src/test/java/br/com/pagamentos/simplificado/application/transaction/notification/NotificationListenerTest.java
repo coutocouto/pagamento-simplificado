@@ -15,13 +15,13 @@ import org.springframework.messaging.support.GenericMessage;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class NotificationConsumerTest {
+class NotificationListenerTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Mock
     private NotificationClient notificationClient;
     @InjectMocks
-    private NotificationConsumer notificationConsumer;
+    private NotificationListener notificationListener;
 
     @BeforeEach
     void setup() {
@@ -36,7 +36,7 @@ class NotificationConsumerTest {
         when(notificationClient.sendNotification(any(Transaction.class)))
                 .thenReturn(new ResponseEntity<Void>(HttpStatus.OK));
 
-        notificationConsumer.receiveNotification(message);
+        notificationListener.receiveNotification(message);
 
         verify(notificationClient, times(1)).sendNotification(any(Transaction.class));
     }
