@@ -26,7 +26,7 @@ public class TransactionValidator {
     }
 
     private void validateEqualsWallets(Notification notification, Transaction transaction) {
-        if (transaction.getPayer().equals(transaction.getPayee())) {
+        if (transaction.getPayer().getId().getValue() == transaction.getPayee().getId().getValue()) {
             notification.addError("The payer and payee must be different", "payee");
         }
     }

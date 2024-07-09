@@ -1,5 +1,6 @@
 package br.com.pagamentos.simplificado.domain.transaction;
 
+import br.com.pagamentos.simplificado.domain.user.User;
 import br.com.pagamentos.simplificado.domain.wallet.AccountType;
 import br.com.pagamentos.simplificado.domain.wallet.Wallet;
 import br.com.pagamentos.simplificado.shared.domain.exceptions.ValidationException;
@@ -9,8 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TransactionTest {
 
-    Wallet payee = Wallet.create(null, null, 0.0);
-    Wallet payer = Wallet.create(null, null, 0.0);
+    User user1 = User.create("1", "John", "john@example.com", "password");
+    User user2 = User.create("2", "Doe", "doe@example.com", "password2");
+    Wallet payee = Wallet.create(user1, AccountType.USER, 0.0);
+    Wallet payer = Wallet.create(user1, AccountType.SELLER, 0.0);
 
     @Test
     void createTransaction() {

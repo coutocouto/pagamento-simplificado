@@ -14,7 +14,7 @@ class UserTest {
     }
 
     @Test
-    void createUserWhitAValidUuid() {
+    void createUserWhitAValidUserId() {
         User user = User.create("Fulano de Tal", "12345678901", "email@protected]", "1234567");
         assertNotNull(user.getId().getValue());
         assertInstanceOf(UserId.class, user.getId());

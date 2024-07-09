@@ -10,7 +10,7 @@ import br.com.pagamentos.simplificado.domain.wallet.Wallet;
 import br.com.pagamentos.simplificado.infrastructure.exception.AuthorizationException;
 import br.com.pagamentos.simplificado.infrastructure.wallet.repository.WalletJpaModel;
 import br.com.pagamentos.simplificado.infrastructure.wallet.repository.WalletJpaRepository;
-import br.com.pagamentos.simplificado.shared.domain.exceptions.EntityNotFound;
+import br.com.pagamentos.simplificado.shared.domain.exceptions.EntityNotFoundException;
 import br.com.pagamentos.simplificado.shared.domain.exceptions.ValidationException;
 import br.com.pagamentos.simplificado.shared.domain.validation.Notification;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,8 +40,8 @@ class CreateTransactionUseCaseTest {
     }
 
     @Test
-    void testExecute_Success() {
-        CreateTransactionInput input = new CreateTransactionInput(1, 2, 100);
+    void testCreateTransaction_Success() {
+        CreateTransactionInput input = new CreateTransactionInput("1", "2", 100);
         Wallet payee = createWallet("1", 100);
         Wallet payer = createWallet("2", 100);
 
@@ -54,9 +54,10 @@ class CreateTransactionUseCaseTest {
         Notification notification = mock(Notification.class);
         when(notification.hasErrors()).thenReturn(false);
 
-        Transaction transaction = mock(Transaction.class);
-        when(transaction.getNotification()).thenReturn(notification);
-        when(transaction.getNotification().hasErrors()).thenReturn(false);
+        Transaction transaction = Transaction.create(payee, payer, 100);
+        Transaction transactionMock = mock(Transaction.class);
+        when(transactionMock.getNotification()).thenReturn(notification);
+        when(transactionMock.getNotification().hasErrors()).thenReturn(false);
         when(transactionRepository.create(any())).thenReturn(transaction);
 
         CreateTransactionOutput output = useCase.execute(input);
@@ -68,8 +69,8 @@ class CreateTransactionUseCaseTest {
     }
 
     @Test
-    void testExecute_FailAuthorization() {
-        CreateTransactionInput input = new CreateTransactionInput(1, 2, 100);
+    void testCreateTransaction_FailAuthorization() {
+        CreateTransactionInput input = new CreateTransactionInput("1", "2", 100);
         Wallet payee = createWallet("1", 100);
         Wallet payer = createWallet("2", 100);
 
@@ -81,25 +82,24 @@ class CreateTransactionUseCaseTest {
     }
 
     @Test
-    void testExecute_FailValidation() {
-        CreateTransactionInput input = new CreateTransactionInput(1, 1, 0);
+    void testCreateTransaction_FailValidation() {
+        CreateTransactionInput input = new CreateTransactionInput("1", "1", 0);
         Wallet payee = createWallet("1", 100);
         Wallet payer = createWallet("1", 100);
 
         when(walletRepository.findById("1")).thenReturn(Optional.of(WalletJpaModel.toModel(payee)));
-        when(walletRepository.findById("1")).thenReturn(Optional.of(WalletJpaModel.toModel(payee)));
-        when(authorizationService.isAuthorized()).thenReturn(true); // Autorização passa, mas a validação falha.
-
+        when(walletRepository.findById("1")).thenReturn(Optional.of(WalletJpaModel.toModel(payer)));
+        when(authorizationService.isAuthorized()).thenReturn(true);
         assertThrows(ValidationException.class, () -> useCase.execute(input));
     }
 
 
     @Test
-    void testExecute_WalletNotFound() {
-        CreateTransactionInput input = new CreateTransactionInput(1, 2, 100);
+    void testCreateTransaction_WalletNotFound() {
+        CreateTransactionInput input = new CreateTransactionInput("1", "2", 100);
         when(walletRepository.findById("1")).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFound.class, () -> useCase.execute(input));
+        assertThrows(EntityNotFoundException.class, () -> useCase.execute(input));
     }
 
     private Wallet createWallet(String index, double balance) {

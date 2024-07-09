@@ -12,7 +12,7 @@ public class Transaction extends Entity<TransactionId> {
     private final Instant createdAt;
     private TransactionStatus status;
 
-    public Transaction(TransactionId id, Wallet payee, Wallet payer, double amount, TransactionStatus status, Instant createdAt) {
+    private Transaction(TransactionId id, Wallet payee, Wallet payer, double amount, TransactionStatus status, Instant createdAt) {
         super(id);
         this.payee = payee;
         this.payer = payer;

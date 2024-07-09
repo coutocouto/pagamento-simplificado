@@ -15,8 +15,7 @@ public class NotificationService {
     }
 
     public void notify(Transaction transaction) {
-        log.info("notifying transaction {}...", transaction);
-
+        log.info("notification transaction {}...", transaction);
         notificationProducer.sendNotification(transaction);
     }
 }

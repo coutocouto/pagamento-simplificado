@@ -4,5 +4,8 @@ import java.util.List;
 
 public interface BaseRepository<T> {
     T create(T entity);
+
     List<T> list();
+
+    T findById(String id);
 }

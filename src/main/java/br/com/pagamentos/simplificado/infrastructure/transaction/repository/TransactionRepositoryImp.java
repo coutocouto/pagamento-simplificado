@@ -24,4 +24,9 @@ public class TransactionRepositoryImp implements TransactionRepository {
     public List<Transaction> list() {
         return this.repository.findAll().stream().map(TransactionJpaModel::toEntity).toList();
     }
+
+    @Override
+    public Transaction findById(String id) {
+        return this.repository.findById(id).map(TransactionJpaModel::toEntity).orElse(null);
+    }
 }

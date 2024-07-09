@@ -5,6 +5,7 @@ import br.com.pagamentos.simplificado.application.transaction.create.CreateTrans
 import br.com.pagamentos.simplificado.application.transaction.create.CreateTransactionUseCase;
 import br.com.pagamentos.simplificado.application.transaction.list.ListTransactionOutput;
 import br.com.pagamentos.simplificado.application.transaction.list.ListTransactionUseCase;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ public class TransactionController {
     }
 
     @PostMapping("/transfer")
-    public CreateTransactionOutput createTransaction(@RequestBody CreateTransactionInput input) {
+    public CreateTransactionOutput createTransaction(@RequestBody @Valid CreateTransactionInput input) {
         return createTransactionUseCase.execute(input);
     }
 }

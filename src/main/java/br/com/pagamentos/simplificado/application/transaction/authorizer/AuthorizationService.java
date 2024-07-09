@@ -16,7 +16,13 @@ public class AuthorizationService {
 
     public boolean isAuthorized() {
         log.info("Checking if the transaction is authorized");
-        return authorizationClient.isAuthorized().getStatusCode().is2xxSuccessful();
+        try {
+            authorizationClient.isAuthorized();
+            return true;
+        } catch (Exception e) {
+            log.error("Error while checking authorization", e);
+            return false;
+        }
     }
 
 }

@@ -9,14 +9,16 @@ import br.com.pagamentos.simplificado.infrastructure.exception.AuthorizationExce
 import br.com.pagamentos.simplificado.infrastructure.wallet.repository.WalletJpaModel;
 import br.com.pagamentos.simplificado.infrastructure.wallet.repository.WalletJpaRepository;
 import br.com.pagamentos.simplificado.shared.application.UseCase;
-import br.com.pagamentos.simplificado.shared.domain.exceptions.EntityNotFound;
+import br.com.pagamentos.simplificado.shared.domain.exceptions.EntityNotFoundException;
 import br.com.pagamentos.simplificado.shared.domain.exceptions.ValidationException;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-@Transactional
 @Service
 public class CreateTransactionUseCase extends UseCase<CreateTransactionInput, CreateTransactionOutput> {
+    private static final Logger log = LoggerFactory.getLogger(CreateTransactionUseCase.class);
 
     private final TransactionRepository transactionRepository;
     private final WalletJpaRepository walletRepository;
@@ -35,16 +37,18 @@ public class CreateTransactionUseCase extends UseCase<CreateTransactionInput, Cr
         this.notificationService = notificationService;
     }
 
+    @Transactional
     @Override
     public CreateTransactionOutput execute(CreateTransactionInput createTransactionInput) {
-        String payeeId = createTransactionInput.payee().toString();
-        String payerId = createTransactionInput.payer().toString();
+        log.info("Creating transaction: {}", createTransactionInput);
+        String payeeId = createTransactionInput.payee();
+        String payerId = createTransactionInput.payer();
         double value = createTransactionInput.value();
 
         Wallet payee = walletRepository.findById(payeeId).orElseThrow(
-                () -> new EntityNotFound("Payee not found")).toEntity();
+                () -> new EntityNotFoundException("Payee not found")).toEntity();
         Wallet payer = walletRepository.findById(payerId).orElseThrow(
-                () -> new EntityNotFound("Payer not found")).toEntity();
+                () -> new EntityNotFoundException("Payer not found")).toEntity();
 
         Transaction transaction = Transaction.create(
                 payee,
@@ -62,16 +66,19 @@ public class CreateTransactionUseCase extends UseCase<CreateTransactionInput, Cr
         Transaction savedTransaction = transactionRepository.create(transaction);
         notificationService.notify(savedTransaction);
 
+        log.info("Transaction created: {}", savedTransaction);
         return CreateTransactionOutput.from(savedTransaction);
     }
 
     private void validateTransaction(Transaction transaction) {
         if (transaction.getNotification().hasErrors()) {
             transaction.deny();
+            log.error("Transaction has errors: {}", transaction.getNotification().getErrors());
             throw new ValidationException(transaction.getNotification().getErrors());
         }
         if (!authorizationService.isAuthorized()) {
             transaction.deny();
+            log.error("Transaction is not authorized");
             throw new AuthorizationException("The transaction is not authorized");
         }
     }
